@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @RestController
 public class StudentController {
 
-    @GetMapping("students")
+    @GetMapping("students") //get students
     public String getStudents() {
         return "Lista de estudantes";
     }
