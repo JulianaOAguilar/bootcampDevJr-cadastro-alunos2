@@ -1,16 +1,20 @@
 package com.abutua.product_backend.controller;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.abutua.product_backend.models.Student;
 
-import java.util.Arrays;
+import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 
 @RestController
@@ -18,9 +22,25 @@ public class StudentController {
 
 
     //list of Students
-    private List<Student> students = Arrays.asList(new Student(1, "student 1", "student1@gmail.com", "number1", 2, 1 ),
-                                                new Student(2, "student 2", "student2@gmail.com", "number2", 1, 2 ),
-                                                new Student(3, "student 3", "student3@gmail.com", "number3", 1, 2 ));
+       private List<Student> students = new ArrayList<>();
+
+
+
+
+     @PostMapping("students") //salvar os produtos 
+    public ResponseEntity<Student> save(@RequestBody Student student){
+        student.setId(students.size()+1);
+        students.add(student);
+
+        URI location = ServletUriComponentsBuilder
+        .fromCurrentRequest()
+        .path("/{id}")
+        .buildAndExpand(student.getId())
+        .toUri(); //construindo uma URI para cada product, junto com o ID
+
+
+        return ResponseEntity.created(location).body(student);
+    }                                            
 
     //endpoint GET students
     @GetMapping("students") //get students
