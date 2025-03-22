@@ -19,7 +19,7 @@ import org.springframework.web.server.ResponseStatusException;
     private List<Course> courses = Arrays.asList(new Course(1, "Java"),
                                                 new Course(2, "Angular"),
                                                 new Course(3, "C#"),
-                                                new Course(4, "Python"));
+                                                new Course(4, "Python")); //oi
 
 
      @GetMapping("courses/{id}") // responseEnstity trata a resposta
