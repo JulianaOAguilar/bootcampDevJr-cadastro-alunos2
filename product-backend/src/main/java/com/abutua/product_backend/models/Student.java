@@ -4,7 +4,7 @@ public class Student {
     private int id;
     private String name;
     private String email;
-    private String phnone;
+    private String phone;
     private int idCourse;
     private int period;
 
@@ -12,7 +12,7 @@ public class Student {
         this.id = id;
         this.name = name;
         this.email = email;
-        this.phnone = phone;
+        this.phone = phone;
         this.idCourse = idCourse;
         this.period = period;
     }
@@ -42,11 +42,11 @@ public class Student {
     public void setEmail(String email) {
         this.email = email;
     }
-    public String getPhnone() {
-        return phnone;
+    public String getPhone() {
+        return phone;
     }
-    public void setPhnone(String phnone) {
-        this.phnone = phnone;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
     public int getIdCourse() {
         return idCourse;
