@@ -15,15 +15,21 @@ function loadIdCourses() {
     $.ajax({
         url: "http://localhost:8080/courses",
         type: "GET",
-        async: false, // Chamada síncrona
+        async: false, 
         success: (response) => {
-            idCourse = response;  // Agora a variável idCourse está corretamente preenchida
+            idCourse = response;  
+            let select = document.getElementById("SelectOption");
+            select.innerHTML = '<option value="">Selecione um curso</option>'; 
             for (var cat of idCourse) {
-                document.getElementById("SelectOption").innerHTML += `<option value="${cat.id}">${cat.name}</option>`;
+                select.innerHTML += `<option value="${cat.id}">${cat.name}</option>`;
             }
+        },
+        error: (xhr, status, error) => {
+            console.error("Erro ao carregar cursos:", error);
         }
     });
 }
+
 
 // Função para carregar os alunos
 function loadStudents() {
@@ -74,10 +80,11 @@ function AddNewRow(Item) {
 }
 
 // Função para salvar um novo aluno
+
 function save() {
     var shiftSelected = document.querySelector('input[name="RadiusShifts"]:checked').value;
 
-    var item = {
+    var product = {
         id: students.length + 1,
         name: document.getElementById("InputName").value,
         email: document.getElementById("InputEmail").value,
@@ -86,10 +93,18 @@ function save() {
         period: parseFloat(shiftSelected)
     };
 
-    r
-
-    AddNewRow(item);
-    students.push(item);
-
-    document.getElementById('FormStudent').reset();
+    $.ajax({
+        url: "http://localhost:8080/students",
+        type: "POST",
+        data: JSON.stringify(product),  // Aqui agora está correto
+        contentType: "application/json",
+        success: (product) => {    
+            AddNewRow(product);
+            students.push(product);
+            document.getElementById('FormStudent').reset();
+        },
+        error: (xhr, status, error) => {
+            console.error("Erro ao salvar aluno:", error);
+        }
+    });
 }
